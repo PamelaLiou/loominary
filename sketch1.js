@@ -3,6 +3,9 @@ var dim; //size of each pixel
 var grid;  //number of pixels per grid
 var value,canvas, value1, value2;
 
+
+
+
 value1 = "#FF00FF"; //default button color1
 value2 = "#00FFFF"; //default button color1
 
@@ -10,14 +13,10 @@ var inpVal1, inpVal2;
 
 
 function setup() {
-	//canvas = createCanvas(500, 400);
-	//canvas.parent("myContainer");
 	pixells =[[]];
 	dim = 40; //size of each pixel
 	grid= 16;  //number of pixels per grid
-	var padding=50;// offset for grid **find a better solution**
-	//value1 = "#FF00FF"; //default button color1
-	//value = value1;
+	var padding=50;// offset for grid **find a better solution in css**
 
 
 	inpVal1 = createInput(value1);
@@ -28,64 +27,31 @@ function setup() {
 
 	var submit = createButton('submit');
 	submit.parent("r_panel");
-	submit.mousePressed(greet);
-
-	// var greeting = createElement('h2', 'what is your name?');
-	// greeting.parent("r_panel"));
-
-	//var panel = createDiv(); 
+	submit.mousePressed(updatePress);
 
 
-    // height: 25px;
-    // position: absolute;
-    // top: 0px!important;
-    // right: 0px!important;
-
-
-    for(var i = 0; i < grid; i++){
-  	pixells[i]=[]; // ugh this is so weird
-  	for(var j = 0; j< grid; j++){
-  		pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, value1));
-  		pixells[i][j].makeButton();
+	for(var i = 0; i < grid; i++){
+  		pixells[i]=[]; // ugh this is so weird
+  		for(var j = 0; j< grid; j++){
+  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, value1));
+  			pixells[i][j].makeButton();
+  		}
   	}
   }
 
 
 
-}
+  function draw() {
+
+  	for(var i = 0; i < grid; i++){
+  		for(var j = 0; j< grid; j++){
+  			pixells[i][j].updateButton();
+
+  		}
+  	}
+  }
 
 
-
-function draw() {
-
-	//grid = int(inp.value);
-
-	for(var i = 0; i < grid; i++){
-		for(var j = 0; j< grid; j++){
-			pixells[i][j].updateButton();
-
-		}
-	}
-}
-
-
-  // draw stuff here
- // var dim = 40; //size of each pixel
-  //var grid= 5;  //number of pixels per grid
-
-  // for(var i = 0; i < grid; i++){
-  // 	for(var j =0; j< grid; j++){
-
-  // 		newPix = new Pixell(i*dim, j*dim, dim/2, value);
-  // 		newPix.makeButton();
-  // 		//fill(100,100,0);
-
-  // 		//rect(i* dim, j*dim, dim, dim);
-  // 	}
-  // }
-
-  // //var test = Pixel(10,10,10, "#FFFFFF");
-  // //test.clicked();
 
   function Pixell( x, y, padding, val ) {
 
@@ -100,6 +66,7 @@ function draw() {
   		//button.parent("myContainer");
   		button.position(this.x, this.y);
   		button.mousePressed(this.changeVal);
+  		//console.log("makeButton, this.changeVal is" + this.changeVal());
 
   		
   		// button.addEventListener("click", function (){
@@ -111,51 +78,56 @@ this.updateButton = function(){
 	button.style("background", val);
 	button.style("padding", this.padding);
 	button.style("padding", this.padding);
+		//console.log("updateButton, val is" + val);
 
-};
 
-this.updateVal = function(newVal1, newVal2){
-	if (val == value1){
-		value1 = newVal1;
-		val = value1;
-		value2= newVal2;
-	}else{
-		val = value2;
-		value2 = newVal2;
-		val =value2;
-		value1= newVal1;
+	};
+
+	this.updateVal = function(newVal1, newVal2){
+		if (val == value1){
+			//console.log("true")
+			value1 = newVal1;
+			val = value1;
+			value2= newVal2;
+			return newVal1;
+			//console.log()
+
+		}else{
+			//console.log("false")
+			val = value2;
+			value2 = newVal2;
+			val =value2;
+			value1= newVal1;
+			return newVal2;
+		}
 	}
+
+	this.changeVal = function(){ //toggle
+		//alerted();
+		if (val == value1){
+			val = value2;
+			return val;
+		}else{
+			val = value1;
+			return 
+		}
+
+	};
+
 }
 
-	this.changeVal = function(){
-	//alerted();
-	if (val == value1){
-		val = value2;
-		return val;
-	}else{
-		val = value1;
-		return 
-	}
-	console.log(val);
-
-};
-
-
-}
-
-function greet(){
+function updatePress(){
 	//value1 = inpVal1.value();
 	for(var i = 0; i < grid; i++){
 		for(var j = 0; j< grid; j++){
-			pixells[i][j].updateVal(inpVal1.value(), inpVal2.value());
+			console.log("before: "+ pixells[i][j].val)
+			console.log("input 1 = "+inpVal1.value());
+			pixells[i][j].val = pixells[i][j].updateVal(inpVal1.value(), inpVal2.value());
+			console.log("after: "+ pixells[i][j].val)
+
 
 		}
 	}
 }
 
-
-
-// function changeVal() {
-
-// }
 
