@@ -1,13 +1,13 @@
 var pixells;
 var dim; //size of each pixel
 var grid;  //number of pixels per grid
-var value,canvas, trueColor, falseColor;
+var value,canvas, value1, value2;
 
 
 
 
-trueColor = "#FF00FF"; //default button color1
-falseColor = "#00FFFF"; //default button color1
+value1 = "#FF00FF"; //default button color1
+value2 = "#00FFFF"; //default button color1
 
 var inpVal1, inpVal2;
 
@@ -16,14 +16,15 @@ function setup() {
 	pixells =[[]];
 	dim = 40; //size of each pixel
 	grid= 16;  //number of pixels per grid
+	value = value1;
 
 	var padding=50;// offset for grid **find a better solution in css**
 
 
-	inpVal1 = createInput(trueColor);
+	inpVal1 = createInput(value1);
 	inpVal1.parent("r_panel");
 
-	inpVal2 = createInput(falseColor);
+	inpVal2 = createInput(value2);
 	inpVal2.parent("r_panel");
 
 	var submit = createButton('submit');
@@ -34,7 +35,7 @@ function setup() {
 	for(var i = 0; i < grid; i++){
   		pixells[i]=[]; // ugh this is so weird
   		for(var j = 0; j< grid; j++){
-  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, trueColor));
+  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, value1));
   			pixells[i][j].makeButton();
   		}
   	}
@@ -85,31 +86,31 @@ this.updateButton = function(){
 	};
 
 	this.updateVal = function(newVal1, newVal2){
-		if (val == trueColor){
+		if (val == value1){
 			//console.log("true")
-			trueColor = newVal1;
-			val = trueColor;
-			falseColor= newVal2;
+			value1 = newVal1;
+			val = value1;
+			value2= newVal2;
 			return newVal1;
 			//console.log()
 
 		}else{
 			//console.log("false")
-			val = falseColor;
-			falseColor = newVal2;
-			val =falseColor;
-			trueColor= newVal1;
+			val = value2;
+			value2 = newVal2;
+			val =value2;
+			value1= newVal1;
 			return newVal2;
 		}
 	}
 
 	this.changeVal = function(){ //toggle
 		//alerted();
-		if (val == trueColor){
-			val = falseColor;
+		if (val == value1){
+			val = value2;
 			return val;
 		}else{
-			val = trueColor;
+			val = value1;
 			return val;
 		}
 
@@ -118,7 +119,7 @@ this.updateButton = function(){
 }
 
 function updatePress(){
-	//trueColor = inpVal1.value();
+	//value1 = inpVal1.value();
 	for(var i = 0; i < grid; i++){
 		for(var j = 0; j< grid; j++){
 			console.log("before: "+ pixells[i][j].val)
