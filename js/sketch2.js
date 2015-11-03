@@ -1,3 +1,4 @@
+"use strict";
 var pixells;
 var dim; //size of each pixel
 var grid;  //number of pixels per grid
@@ -19,24 +20,26 @@ function setup() {
 
 	var padding=50;// offset for grid **find a better solution in css**
 	var warpText = createDiv('Warp color: ');
-	  //text.position(50, 50);
-
-	warpVal = createInput(trueColor);
 	warpVal.parent("r_panel");
 
-	weftText = createDiv('Weft color: ');
+	  //text.position(50, 50);
+
+	  warpVal = createInput(trueColor);
+	  warpVal.parent("r_panel");
+
+	  var weftText = createDiv('Weft color: ');
 //	text.position(50, 50);
-	weftText.parent("r_panel");
+weftText.parent("r_panel");
 
- 	weftVal = createInput(falseColor);
- 	weftVal.parent("r_panel");
+weftVal = createInput(falseColor);
+weftVal.parent("r_panel");
 
- 	var submit = createButton('submit');
- 	submit.parent("r_panel");
- 	submit.mousePressed(updatePress);
+var submit = createButton('submit');
+submit.parent("r_panel");
+submit.mousePressed(updatePress);
 
 
-  for(var i = 0; i < grid; i++){
+for(var i = 0; i < grid; i++){
   		pixells[i]=[]; // ugh this is so weird
   		for(var j = 0; j< grid; j++){
   			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, true));
@@ -70,42 +73,35 @@ function setup() {
   		this.y = y;
   		this.padding = padding;
   		this.val = val;
+
   	}
 
-  	var button;
+  //	var button;
 
-  	makeButton = function(){
-  		button = createButton(' ');
+  makeButton(){
+  	var	button = createButton(' ');
   		//button.parent("myContainer");
   		button.position(this.x, this.y);
   		button.mousePressed(this.changeVal);
   		//console.log("makeButton, this.changeVal is" + this.changeVal());
-
+  		var getButton = function(){return button};
   		
   		// button.addEventListener("click", function (){
   		// 	if this.val
   		// });
 };
 
-updateButton = function(){
-	button.style("background", truthTest(this.val));
-	button.style("padding", this.padding);
-	button.style("padding", this.padding);
+updateButton(){
+	var instButton = this.makeButton;
+	instButton.getButton.style("background", truthTest(this.val));
+	instButton.getButton.style("padding", this.padding);
+	instButton.getButton.style("padding", this.padding);
 			//console.log("updateButton, val is" + val);
 
 
 		};
 
-		truthTest = function(boole){
-			if (boole == true){
-				return truthColor; 
-			}else{
-				return falseColor;
-			}
-
-		};
-
-		updateVal = function(newVal1, newVal2){
+		updateVal(newVal1, newVal2){
 			if (val == trueColor){
 			//console.log("true")
 			trueColor = newVal1;
@@ -124,7 +120,7 @@ updateButton = function(){
 		}
 	}
 
-	changeVal = function(){ //toggle
+	changeVal(){ //toggle
 		//alerted();
 		if (this.val == true){
 			this.val = false;
@@ -153,3 +149,11 @@ function updatePress(){
 }
 
 
+function truthTest(boole){
+	if (boole == true){
+		return truthColor; 
+	}else{
+		return falseColor;
+	}
+
+};
