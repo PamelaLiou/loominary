@@ -72,10 +72,11 @@ for(var i = 0; i < grid; i++){
   	this.y = y;
   	this.padding = padding;
   	this.val = val;
+  	var thatVal = val; // ctx binding all jazzed up. WHYYYYYYYYY someone explain tihs to me. 
   	var button;
+  		button = createButton(' ');
 
   	this.makeButton = function(){
-  		button = createButton(' ');
   		//button.parent("myContainer");
   		button.position(this.x, this.y);
   		button.mousePressed(this.changeVal);
@@ -86,15 +87,18 @@ for(var i = 0; i < grid; i++){
   		// 	if this.val
   		// });
 };
+	this.getButton = function(){return button;};
 
-this.updateButton = function(){
-	button.style("background", truthTest(val));
-	button.style("padding", this.padding);
-	button.style("padding", this.padding);
-		//console.log("updateButton, val is" + truthTest(this.val));
+	this.getVal = function(){return thatVal;};
+
+	this.updateButton = function(){
+		button.style("background", truthTest(thatVal));
+		button.style("padding", this.padding);
+		button.style("padding", this.padding);
+			//console.log("updateButton, val is" + truthTest(this.val));
 
 
-	};
+		};
 
 	this.updateVal = function(newVal1, newVal2){
 		if (trueColor == newVal1 && falseColor == newVal2){
@@ -111,12 +115,12 @@ this.updateButton = function(){
 		//alerted();
 		console.log("pressed");
 
-		if (this.val == true){
-			this.val = false;
+		if (thatVal == true){
+			thatVal = false;
 		}else{
-			this.val = true;
+			thatVal = true;
 		}
-		console.log(this.val);
+		//console.log(this.val);
 		//return truthTest(this.val);
 
 	};
