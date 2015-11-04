@@ -4,12 +4,12 @@ var grid;  //number of pixels per grid
 var value,canvas, trueColor, falseColor;
 
 //Warp is true; Weft is false
+var loomApp = {"title": "gvalue"};
 
 
 
-
-trueColor = "#FF00FF"; //default button color1
-falseColor = "#00FFFF"; //default button color1
+trueColor = "#EDE574"; //default button color1
+falseColor = "#FF4E50"; //default button color1
 
 var inpWarp, inpWeft;
 
@@ -22,7 +22,8 @@ function setup() {
 
 	var padding=50;// offset for grid **find a better solution in css**
 
-	//Parameter GUI
+	//Parameter GUI 
+	// *REFACTOR*
 
 	var inpWarpText = createDiv('Warp color: ');
 	inpWarpText.parent("r_panel");
@@ -36,6 +37,13 @@ function setup() {
 
 	inpWeft = createInput(falseColor);
 	inpWeft.parent("r_panel");
+
+	var inpDimText = createDiv('dimension: ');
+	//	text.position(50, 50);
+	inpDimText.parent("r_panel");
+
+	var inpDim = createInput(falseColor);
+	inpDim.parent("r_panel");
 
 	var submit = createButton('submit');
 	submit.parent("r_panel");
@@ -64,6 +72,10 @@ for(var i = 0; i < grid; i++){
   	}
   }
 
+  function mousePressed() {
+  	// set the color here
+
+  }
 
 
   function Pixell( x, y, padding, val ) {
@@ -74,19 +86,31 @@ for(var i = 0; i < grid; i++){
   	this.val = val;
   	var thatVal = val; // ctx binding all jazzed up. WHYYYYYYYYY someone explain tihs to me. 
   	var button;
-  		button = createButton(' ');
+  	button = createButton(' ');
 
   	this.makeButton = function(){
   		//button.parent("myContainer");
   		button.position(this.x, this.y);
   		button.mousePressed(this.changeVal);
+
+  		// store a reference to this pixel
+  		var p = this;
+
+		button.mouseOver(function(){
+			if(mouseIsPressed){
+				p.changeVal();
+			}
+		});
+  		
   		//console.log("makeButton, this.changeVal is" + this.changeVal());
 
   		
   		// button.addEventListener("click", function (){
   		// 	if this.val
   		// });
-};
+	};
+	
+
 	this.getButton = function(){return button;};
 
 	this.getVal = function(){return thatVal;};
@@ -95,12 +119,12 @@ for(var i = 0; i < grid; i++){
 		button.style("background", truthTest(thatVal));
 		button.style("padding", this.padding);
 		button.style("padding", this.padding);
-			//console.log("updateButton, val is" + truthTest(this.val));
+				//console.log("updateButton, val is" + truthTest(this.val));
 
 
 		};
 
-	this.updateVal = function(newVal1, newVal2){
+	this.updateVal = function(newVal1, newVal2){ //update the state based on input
 		if (trueColor == newVal1 && falseColor == newVal2){
 			//console.log("true")
 			console.log(" ");
@@ -134,6 +158,7 @@ function updateSubmit(){
 
 			pixells[i][j].updateVal(inpWarp.value(), inpWeft.value());
 			console.log("updatedVal " + pixells[0][0].val);
+			dim = inpDim.value();
 
 
 		}
