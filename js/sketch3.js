@@ -4,14 +4,68 @@ var grid;  //number of pixels per grid
 var value,canvas, trueColor, falseColor;
 
 //Warp is true; Weft is false
-var loomApp = {"title": "gvalue"};
 
+
+//var loomApp = {"title": "gvalue"}; //get rid of the global variables soon
+
+var checkboard_button;
+var twill_button;
 
 
 trueColor = "#EDE574"; //default button color1
 falseColor = "#FF4E50"; //default button color1
 
 var inpWarp, inpWeft;
+
+var checkerboard = 
+[
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+
+
+];
+
+var twill=
+
+[
+[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+
+
+];
+
+
+
+
+
 
 
 function setup() {
@@ -49,46 +103,54 @@ function setup() {
 	submit.parent("r_panel");
 	submit.mousePressed(updateSubmit);
 
+
+
+
+	checkerboard_button = createImg("/js/img/checkerboard_button.png");
+	checkerboard_button.parent("buttonPanel");
+	checkerboard_button.mousePressed(submitCheckerboard);
+
+	twill_button = createImg("/js/img/twill_button.png");
+
+	twill_button.parent("buttonPanel");
+	twill_button.mousePressed(submitTwill);
+
+
 //Instantiate the Pixell Grid
 
 for(var i = 0; i < grid; i++){
-  		pixells[i]=[]; // ugh this is so weird
-  		for(var j = 0; j< grid; j++){
-  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, true));
-  			pixells[i][j].makeButton();
-  		}
-  	}
-  }
+	  		pixells[i]=[]; // ugh this is so weird
+	  		for(var j = 0; j< grid; j++){
+	  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, true));
+	  			pixells[i][j].makeButton();
+	  		}
+	  	}
+	  }
 
 
 
-  function draw() {
-
-  	for(var i = 0; i < grid; i++){
-  		for(var j = 0; j< grid; j++){
-  			pixells[i][j].updateButton();
-
-  		}
-  	}
-  }
-
-  function mousePressed() {
-  	// set the color here
-
-  }
+	  function draw() {
 
 
-  function Pixell( x, y, padding, val ) {
+	  	for(var i = 0; i < grid; i++){
+	  		for(var j = 0; j< grid; j++){
+	  			pixells[i][j].updateButton();
+	  		}
+	  	}
+	  }
 
-  	this.x = x; 
-  	this.y = y;
-  	this.padding = padding;
-  	this.val = val;
-  	var thatVal = val; // ctx binding all jazzed up. WHYYYYYYYYY someone explain tihs to me. 
-  	var button;
-  	button = createButton(' ');
 
-  	this.makeButton = function(){
+	  function Pixell( x, y, padding, val ) {
+
+	  	this.x = x; 
+	  	this.y = y;
+	  	this.padding = padding;
+	  	this.val = val;
+  		var thatVal = val; // ctx binding all jazzed up. WHYYYYYYYYY someone explain tihs to me. 
+  		var button;
+  		button = createButton(' ');
+
+  		this.makeButton = function(){
   		//button.parent("myContainer");
   		button.position(this.x, this.y);
   		button.mousePressed(this.changeVal);
@@ -96,11 +158,11 @@ for(var i = 0; i < grid; i++){
   		// store a reference to this pixel
   		var p = this;
 
-		button.mouseOver(function(){
-			if(mouseIsPressed){
-				p.changeVal();
-			}
-		});
+  		button.mouseOver(function(){
+  			if(mouseIsPressed){
+  				p.changeVal();
+  			}
+  		});
   		
   		//console.log("makeButton, this.changeVal is" + this.changeVal());
 
@@ -108,23 +170,23 @@ for(var i = 0; i < grid; i++){
   		// button.addEventListener("click", function (){
   		// 	if this.val
   		// });
-	};
-	
+};
 
-	this.getButton = function(){return button;};
 
-	this.getVal = function(){return thatVal;};
+this.getButton = function(){return button;};
 
-	this.updateButton = function(){
-		button.style("background", truthTest(thatVal));
-		button.style("padding", this.padding);
-		button.style("padding", this.padding);
+this.getVal = function(){return thatVal;};
+
+this.updateButton = function(){
+	button.style("background", truthTest(thatVal));
+	button.style("padding", this.padding);
+	button.style("padding", this.padding);
 				//console.log("updateButton, val is" + truthTest(this.val));
 
 
-		};
+			};
 
-	this.updateVal = function(newVal1, newVal2){ //update the state based on input
+	this.updateCol = function(newVal1, newVal2){ //update the state based on input
 		if (trueColor == newVal1 && falseColor == newVal2){
 			//console.log("true")
 			console.log(" ");
@@ -149,20 +211,77 @@ for(var i = 0; i < grid; i++){
 
 	};
 
-}
+	this.setPattern = function( patternArray, newi, newj ){ // takes an  array sets the pattern of the pixell grid
+		//alerted();
+		console.log("setting pattern");
+
+		if (patternArray[newi][newj] == undefined){
+			console.log(newj +" "+ newi);
+			thatVal = false;
+			// if (patternArray[grid % newj][grid % newi] == 1){
+			// 	thatVal =true;
+			// }else{
+			// 	thatVal =false;
+			// }
+		}else if (patternArray[newj][newi] == 1){
+			thatVal =true;
+		}else if (patternArray[newj][newi] == 0){
+			thatVal =false;
+		}else{
+			thatVal = false;
+		}
+
+		// for(var i =0; i < grid; i++){
+		// 	for(var j=0; j < grid; j++){
+		// 		if (patternArray[i][j] == 1){
+		// 			thatVal = true;
+		// 		}else{
+		// 			thatVal =false;
+		// 		}
+		// 	}
+		// }
+		//console.log(this.val);
+		//return truthTest(this.val);
+
+	};
+
+};
 
 function updateSubmit(){
 	//trueColor = inpWarp.value();
 	for(var i = 0; i < grid; i++){
-		for(var j = 0; j< grid; j++){
+		for(var j = 0; j < grid; j++){
 
-			pixells[i][j].updateVal(inpWarp.value(), inpWeft.value());
-			console.log("updatedVal " + pixells[0][0].val);
-			dim = inpDim.value();
+			pixells[i][j].updateCol(inpWarp.value(), inpWeft.value());
+			//pixells[i][j].setPattern(checkerboard, i, j);
+			console.log("updatedCol " + pixells[0][0].val);
+			//dim = inpDim.value();
 
 
 		}
 	}
+}
+
+function submitCheckerboard(){ //create a function factory
+	for(var i = 0; i < grid; i++){
+		for(var j = 0; j < grid; j++){
+
+			pixells[i][j].setPattern(checkerboard, i, j);
+
+		}
+	}
+
+}
+
+function submitTwill(){ //create a function factory
+	for(var i = 0; i < grid; i++){
+		for(var j = 0; j < grid; j++){
+
+			pixells[i][j].setPattern(twill, i, j);
+
+		}
+	}
+
 }
 
 function truthTest(boole){
@@ -174,3 +293,24 @@ function truthTest(boole){
 
 };
 
+function array2D(iLen,jLen, callback){ //test this, put into helper lib
+	var i, j;
+	for( i =0; i <iLen; i++){
+		for( j= 0; j <jLen; j++){
+
+			callback();
+		}
+	}
+
+}
+
+// function rewriteArray(arrayPattern){ //takes a basic array and tiles it to the dimension of the pixell grid
+// 	var newArray = [];
+// 	array2D(grid,grid, function(arrayPattern){
+// 		if 
+
+// 	})}
+
+
+
+// }
