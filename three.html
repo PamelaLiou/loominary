@@ -1,0 +1,145 @@
+<html>
+<head>
+	<title>My first Three.js app</title>
+	<style>
+	body { margin: 0; }
+	canvas {
+    background-color: #000;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin: 100px;
+    padding: 0px;
+    position: static; /* fixed or static */
+    top: 100px;
+    left: 100px;
+}
+	</style>
+
+
+</head>
+<body>
+<div id="canvas">
+
+
+
+
+
+
+
+
+
+
+
+	<script src="js/three.min.js"></script>
+	<script>
+
+	var container = document.getElementById( 'canvas' );
+	document.body.appendChild( container );
+
+
+
+	var scene = new THREE.Scene();
+	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+	var renderer = new THREE.WebGLRenderer({ antialias: true });
+	renderer.setClearColor( 0xffffff, 1 ); 
+	// renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize( 600, 600 );
+	container.appendChild( renderer.domElement );
+
+	//document.body.appendChild( renderer.domElement );
+
+	var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+	var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	var cube = new THREE.Mesh( geometry, material );
+	//scene.add( cube );
+
+	var light = new THREE.PointLight(0xffffff);
+	light.position.set(100,250,100);
+	scene.add(light);
+
+	var darkMaterial = new THREE.MeshLambertMaterial( { color: 0x00ffcc } );
+	var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } ); 
+	var multiMaterial = [ darkMaterial, wireframeMaterial ]; 
+
+
+	// var CustomSinCurve = THREE.Curve.create(
+ //    function ( scale ) { //custom curve constructor
+ //    	this.scale = (scale === undefined) ? 1 : scale;
+ //    },
+
+ //    function ( t ) { //getPoint: t is between 0-1
+ //    	var tx = t * 3 - 1.5,
+ //    	ty = Math.sin( 2 * Math.PI * t ),
+ //    	tz = 0;
+
+ //    	return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+ //    }
+ //    );
+
+	// var path = new CustomSinCurve( 100 );
+
+
+	var curve = new THREE.CatmullRomCurve3( [
+	new THREE.Vector3( 10, 0, -10 ),
+	new THREE.Vector3( 20, 0, -10 ),
+	new THREE.Vector3( 40, 0, 10 ),
+	new THREE.Vector3( 50, 0, 10 ),
+
+
+
+
+] );
+
+	var geometry = new THREE.TubeGeometry(
+    curve,  //path
+    20,    //segments
+    2,     //radius
+    8,     //radiusSegments
+    false  //closed
+    );
+
+
+	var shape = new THREE.Mesh( 
+		// total knot radius, tube radius, number cylinder segments, sides per cyl. segment,
+		//  p-loops around torus, q-loops around torus
+		geometry, 
+		darkMaterial );
+	shape.position.set(0, 0, -100);
+	scene.add( shape );
+	
+	
+
+	
+
+	camera.position.z = 5;
+
+	var render = function () {
+		requestAnimationFrame( render );
+
+		cube.rotation.x += 0.1;
+		cube.rotation.y += 0.1;
+
+		renderer.render(scene, camera);
+	};
+
+	render();
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

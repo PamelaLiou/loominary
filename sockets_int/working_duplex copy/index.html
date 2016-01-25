@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <script src="libraries/p5.js" type="text/javascript"></script>
+
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.3.js"></script>
+<script src="app.js" type="text/javascript"></script>
+    <script src="sketch.js" type="text/javascript"></script>
+
+    <script>
+var socket;
+var red,blue,green;
+var longitude;
+var url='localhost';
+// var url='192.168.1.140';
+var port=8000;
+//var url='http//47.18.216.182';
+//$(document).ready(function(){
+  socket = io.connect(url+':'+port);
+  socket.on('toScreen', function (data) {
+   console.log(data);
+  document.getElementById("r_space").innerHTML = data.r;
+  document.getElementById("g_space").innerHTML = data.g;
+  document.getElementById("b_space").innerHTML = data.b;
+    red = data.r;
+    blue = data.g;
+    green = data.b;
+    document.body.style.backgroundColor = 'rgb(' + data.r + ',' + data.g + ',' + data.b + ')';
+    
+  });
+
+function toSerial(rowArray){
+  // var rval = document.getElementById('rval').value;
+  // var gval = document.getElementById('gval').value;
+  // var bval = document.getElementById('bval').value;
+  // socket.emit('toSerial', { r: rval, g: gval, b:bval });}
+
+  var rowStr = rowArray.toString(); //convert THREE.AddOperationray to string
+  socket.emit('toSerial', { r: rowStr});}
+
+  
+
+
+
+
+  </script>
+   
+
+   <style>
+      body {
+        background-color: #880000;
+        
+      }
+      a {
+        color: #ffffff;
+      }
+      #text{
+        position: absolute;
+        z-index: 2;
+        top:130px;
+        right:10px;
+        opacity: 0.5;
+        width:200px;
+        height:30px;
+        font-size: 25px;
+      }
+      #submit{
+        position: absolute;
+        z-index: 3;
+        top:50px;
+        right:10px;
+        opacity: 0.5;
+        width:80px;
+        height:30px;
+        font-size: 15px;
+      }
+      #container{
+        position:absolute;
+        top: 0px;
+        left:0px;
+        z-index: -1;
+      }
+      #bg{
+        position:absolute;
+        z-index: 1;
+        right: 0px;
+        top: 0px;
+        width: 220px;
+        height:220px;
+        color: white;
+        padding-right:10px;
+        font-family: monospace;
+      }
+      #bg p{
+        font-size: 13px;
+        padding-top: 0px;
+        padding-left:20px;
+        text-align: justify;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div id="r_space"><p>R Value</p></div>
+    <div id="g_space"><p>G Value</p></div>
+    <div id="b_space"><p>B Value</p></div>
+    <div id="bg"><p>Enter RGB values to color</p></div>
+    <form>
+      <input id="rval" type="text" name="rval" placeholder="rval">
+      <input id="gval" type="text" name="gval" placeholder="gval">
+      <input id="bval" type="text" name="bval" placeholder="bval">
+      <input onclick="toColor()" id="submit" type="button" value="color">
+    </form> 
+    <script>
+    
+      
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

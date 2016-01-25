@@ -1,9 +1,14 @@
+/* Loominary v. 1 written by Pamela Liou in p5.js
+
+A barebones interface for controlling the Doti Loom. 
+
+Warp is true; Weft is false */
+
 var pixells;
 var dim; //size of each pixel
-var grid;  //number of pixels per grid
-var value,canvas, trueColor, falseColor;
+var grid;  //number of pixels per grid.
+var value, canvas, trueColor, falseColor;
 
-//Warp is true; Weft is false
 
 
 //var loomApp = {"title": "gvalue"}; //get rid of the global variables soon
@@ -118,40 +123,37 @@ function setup() {
 
 //Instantiate the Pixell Grid
 
-for(var i = 0; i < grid; i++){
-	  		pixells[i]=[]; // ugh this is so weird
-	  		for(var j = 0; j< grid; j++){
-	  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, true));
-	  			pixells[i][j].makeButton();
-	  		}
-	  	}
-	  }
+	for(var i = 0; i < grid; i++){
+		  		pixells[i]=[]; // ugh this is so weird
+		  		for(var j = 0; j< grid; j++){
+		  			pixells[i][j] = (new Pixell(i*dim+padding, j*dim+padding, dim/2, true));
+		  			pixells[i][j].makeButton();
+		  		}
+		  	}
+		  }
 
 
 
-	  function draw() {
+  function draw() {
+  	for(var i = 0; i < grid; i++){
+  		for(var j = 0; j< grid; j++){
+  			pixells[i][j].updateButton();
+  		}
+  	}
+  }
 
 
-	  	for(var i = 0; i < grid; i++){
-	  		for(var j = 0; j< grid; j++){
-	  			pixells[i][j].updateButton();
-	  		}
-	  	}
-	  }
-
-
-	  function Pixell( x, y, padding, val ) {
+	function Pixell( x, y, padding, val ) {
 
 	  	this.x = x; 
 	  	this.y = y;
 	  	this.padding = padding;
 	  	this.val = val;
-  		var thatVal = val; // ctx binding all jazzed up. WHYYYYYYYYY someone explain tihs to me. 
-  		var button;
+  		var thatVal = val; 
+   		var button;
   		button = createButton(' ');
 
   		this.makeButton = function(){
-  		//button.parent("myContainer");
   		button.position(this.x, this.y);
   		button.mousePressed(this.changeVal);
 
@@ -164,34 +166,25 @@ for(var i = 0; i < grid; i++){
   			}
   		});
   		
-  		//console.log("makeButton, this.changeVal is" + this.changeVal());
-
-  		
-  		// button.addEventListener("click", function (){
-  		// 	if this.val
-  		// });
-};
+	};
 
 
-this.getButton = function(){return button;};
+	this.getButton = function(){return button;};
 
-this.getVal = function(){return thatVal;};
+	this.getVal = function(){return thatVal;};
 
-this.updateButton = function(){
-	button.style("background", truthTest(thatVal));
-	button.style("padding", this.padding);
-	button.style("padding", this.padding);
-				//console.log("updateButton, val is" + truthTest(this.val));
+	this.updateButton = function(){
+		button.style("background", truthTest(thatVal));
+		button.style("padding", this.padding);
+		button.style("padding", this.padding);
 
 
-			};
+				};
 
 	this.updateCol = function(newVal1, newVal2){ //update the state based on input
 		if (trueColor == newVal1 && falseColor == newVal2){
-			//console.log("true")
 			console.log(" ");
 		}else {
-			//console.log("false")
 			trueColor = newVal1;
 			falseColor = newVal2;
 		}
@@ -206,8 +199,6 @@ this.updateButton = function(){
 		}else{
 			thatVal = true;
 		}
-		//console.log(this.val);
-		//return truthTest(this.val);
 
 	};
 
@@ -218,11 +209,7 @@ this.updateButton = function(){
 		if (patternArray[newi][newj] == undefined){
 			console.log(newj +" "+ newi);
 			thatVal = false;
-			// if (patternArray[grid % newj][grid % newi] == 1){
-			// 	thatVal =true;
-			// }else{
-			// 	thatVal =false;
-			// }
+
 		}else if (patternArray[newj][newi] == 1){
 			thatVal =true;
 		}else if (patternArray[newj][newi] == 0){
@@ -231,17 +218,6 @@ this.updateButton = function(){
 			thatVal = false;
 		}
 
-		// for(var i =0; i < grid; i++){
-		// 	for(var j=0; j < grid; j++){
-		// 		if (patternArray[i][j] == 1){
-		// 			thatVal = true;
-		// 		}else{
-		// 			thatVal =false;
-		// 		}
-		// 	}
-		// }
-		//console.log(this.val);
-		//return truthTest(this.val);
 
 	};
 
@@ -298,9 +274,20 @@ function array2D(iLen,jLen, callback){ //test this, put into helper lib
 	for( i =0; i <iLen; i++){
 		for( j= 0; j <jLen; j++){
 
-			callback();
+			callback(i,j);
 		}
 	}
+
+}
+
+function panelizeArray(oldArray){ //tiles 
+	var newArray = [];
+
+	var forEachPixell = function(i,j){
+		console.log(oldArray[i][j]);
+	};
+
+	array2D(10,10, forEachPixell);
 
 }
 
@@ -311,6 +298,10 @@ function array2D(iLen,jLen, callback){ //test this, put into helper lib
 
 // 	})}
 
-
+			// if (patternArray[grid % newj][grid % newi] == 1){
+			// 	thatVal =true;
+			// }else{
+			// 	thatVal =false;
+			// }
 
 // }
