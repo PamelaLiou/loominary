@@ -8,7 +8,8 @@ var pixells;
 var dim; //size of each pixel
 var grid;  //number of pixels per grid.
 var value, canvas, trueColor, falseColor;
-
+var triggerState, lastTriggerState;
+var globey;
 
 
 //var loomApp = {"title": "gvalue"}; //get rid of the global variables soon
@@ -79,6 +80,8 @@ function setup() {
 	grid= 16;  //number of pixels per grid
 	value = trueColor;
 
+	globey=0;
+
 	var padding=50;// offset for grid **find a better solution in css**
 
 	//Parameter GUI 
@@ -135,13 +138,43 @@ function setup() {
 
 
   function draw() {
+//  	 triggerState =globey;
+  	
+ //  	 if (globey != "") {triggerState = globey;
+ //console.log(globey);
+	// 	//console.log(triggerState);
+	// }
+	
+
+// console.log(globey);
+			
+
+	// if (triggerState != lastTriggerState && triggerState != "") {
+	// 	//console.log(pixells[global]);
+	// 	//if (triggerState==""){console.log("truein")};
+
+
+		
+	// 	//console.log(triggerState);
+ //  }
+
+ //  	 lastTriggerState = triggerState;
+  	// toSerial(sendArray(lastTriggerState));
+		//if (triggerState==""){console.log("trueout")};
+
+
+
+
   	for(var i = 0; i < grid; i++){
   		for(var j = 0; j< grid; j++){
   			pixells[i][j].updateButton();
   		}
   	}
   }
-
+	function globeser(x) {
+		console.log(x);
+toSerial(sendArray(x));
+	  	}
 
 	function Pixell( x, y, padding, val ) {
 
@@ -183,7 +216,7 @@ function setup() {
 
 	this.updateCol = function(newVal1, newVal2){ //update the state based on input
 		if (trueColor == newVal1 && falseColor == newVal2){
-			console.log(" ");
+			// console.log(" ");
 		}else {
 			trueColor = newVal1;
 			falseColor = newVal2;
@@ -207,7 +240,7 @@ function setup() {
 		console.log("setting pattern");
 
 		if (patternArray[newi][newj] == undefined){
-			console.log(newj +" "+ newi);
+			// console.log(newj +" "+ newi);
 			thatVal = false;
 
 		}else if (patternArray[newj][newi] == 1){
@@ -305,11 +338,32 @@ function makeRandArray(){
 
 function mousePressed(){
   var thisArray = [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0];
-  toSerial(makeRandArray());
+  var thisCount;
+  toSerial(sendArray(thisCount));
+  thisCount++;
 
 }
 
 
+function sendArray(ind){
+	var newIndex = ind % 16
+	var binArray = pixells[newIndex].map(function(x){
+		if (x.getVal()== true){
+			return 1;
+
+		}else{return 0;}
+
+
+}       );
+	return binArray;
+}
+
+
+function isInt(value) {
+  return !isNaN(value) && 
+         parseInt(Number(value)) == value && 
+         !isNaN(parseInt(value, 10));
+}
 // function rewriteArray(arrayPattern){ //takes a basic array and tiles it to the dimension of the pixell grid
 // 	var newArray = [];
 // 	array2D(grid,grid, function(arrayPattern){

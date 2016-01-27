@@ -15,6 +15,7 @@ var port = new SerialPort("/dev/tty.usbmodemfd121", {
   baudrate: 9600,
   parser: serialport.parsers.readline("\n")
 }, false); 
+var datadata;
 
 
 
@@ -40,21 +41,22 @@ port.open(function(error) {
     console.log('Serial open');
     port.on('data', function(data) {
     //console.log('data length: ' + data.length);
-    console.log(data);
-    result = data.split(',')
-    red=result[0];
-    blue=result[1];
-    green=result[2];
+    //console.log(data);
+    // result = data.split(',')
+    // red=result[0];
+    // blue=result[1];
+    // green=result[2];
 
-     // console.log(typeof(red))
-
+     // console.log(data);
+// datadata=data;
 
   
     // console.log(data);
     // console.log("You sent R=" + data.r + " G="+ data.g + " B="+ data.g);
     socket.emit('toScreen', { 
      // r: "1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0"
-      r: result[0], g: result[1], b: result[2] 
+      r: data 
+
 
     });     
   
@@ -75,8 +77,10 @@ port.open(function(error) {
 
 
   socket.on('toSerial', function (data) {
-    console.log(data);
-    port.write(data.r);
+    //console.log(data);
+    //port.write(data.r);
+      port.write(data.r+'\n');
+
     //console.log("You sent R=" + data.r + " G="+ data.g + " B="+ data.g);
          
 

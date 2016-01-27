@@ -13,6 +13,7 @@ var warpVal, weftVal;
 
 
 function setup() {
+	console.log(global);
 	pixells =[[]];
 	dim = 40; //size of each pixel
 	grid= 16;  //number of pixels per grid
