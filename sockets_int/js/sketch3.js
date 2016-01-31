@@ -9,7 +9,7 @@ var dim; //size of each pixel
 var grid;  //number of pixels per grid.
 var value, canvas, trueColor, falseColor;
 var triggerState, lastTriggerState;
-var globey;
+var globey={};
 
 
 //var loomApp = {"title": "gvalue"}; //get rid of the global variables soon
@@ -80,7 +80,7 @@ function setup() {
 	grid= 16;  //number of pixels per grid
 	value = trueColor;
 
-	globey=0;
+	globey.r=0;
 
 	var padding=50;// offset for grid **find a better solution in css**
 
@@ -172,9 +172,9 @@ function setup() {
   	}
   }
 	function globeser(x) {
-		console.log(x);
+		console.log("globey is " + x);
 toSerial(sendArray(x));
-	  	}
+	   	}
 
 	function Pixell( x, y, padding, val ) {
 
@@ -364,6 +364,10 @@ function isInt(value) {
          parseInt(Number(value)) == value && 
          !isNaN(parseInt(value, 10));
 }
+
+String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+};
 // function rewriteArray(arrayPattern){ //takes a basic array and tiles it to the dimension of the pixell grid
 // 	var newArray = [];
 // 	array2D(grid,grid, function(arrayPattern){

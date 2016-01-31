@@ -101,13 +101,13 @@ var port=8000;
   socket = io.connect(url+':'+port);
   socket.on('toScreen', function (data) {
     //console.log(data);
-         globey = data.r;
+         globey.r = data.r;
 
 
      // console.log(globey);
-     if(globey!=""){
-     globeser(globey);
-            document.getElementById("test").innerHTML = globey;}//data.r % 16 + 1;
+     if(!globey.r.isEmpty()){
+     globeser(globey.r);
+            document.getElementById("test").innerHTML = globey.r;}//data.r % 16 + 1;
 
 
 

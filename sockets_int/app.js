@@ -55,7 +55,8 @@ port.open(function(error) {
     // console.log("You sent R=" + data.r + " G="+ data.g + " B="+ data.g);
     socket.emit('toScreen', { 
      // r: "1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0"
-      r: data 
+      r: data
+
 
 
     });     
@@ -79,8 +80,12 @@ port.open(function(error) {
   socket.on('toSerial', function (data) {
     //console.log(data);
     //port.write(data.r);
-      port.write(data.r+'\n');
 
+    if(data==""){
+      console.log("fuck this shit");
+    }else{
+      port.write(data.r+'\n');
+    }
     //console.log("You sent R=" + data.r + " G="+ data.g + " B="+ data.g);
          
 
