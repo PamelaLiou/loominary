@@ -113,6 +113,9 @@ function setup() {
 
 
 
+	var arrow = createImg("/js/img/arrow.png");
+
+	arrow.translate(540,-30);
 
 	checkerboard_button = createImg("/js/img/checkerboard_button.png");
 	checkerboard_button.parent("buttonPanel");

@@ -91,6 +91,28 @@
 
 
 ] );
+var tapestry ={}
+
+function warpVerts(binArray, xIndex){
+	var thisArray=[];
+	for (int i = 0; i < binArray.length; i++){
+		thisArray.push( new THREE.Vector3(xIndex,i*40,-10));
+		thisArray.push( new THREE.Vector3(xIndex,i*40+10,-10));
+		thisArray.push( new THREE.Vector3(xIndex,i*40+20,0));
+		thisArray.push( new THREE.Vector3(xIndex,i*40+30,0));
+
+
+
+	}
+	
+	var warpThread = new THREE.CatmullRomCurve3(thisArray);
+}
+
+function weftVerts(array){
+
+}
+
+
 
 	var geometry = new THREE.TubeGeometry(
     curve,  //path

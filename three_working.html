@@ -1,0 +1,246 @@
+<html>
+<head>
+	<title>My first Three.js app</title>
+	<style>
+	body { margin: 0; }
+	canvas {
+		background-color: #000;
+		width: 200px;
+		height: 200px;
+		border: 1px solid black;
+		margin: 100px;
+		padding: 0px;
+		position: static; /* fixed or static */
+		top: 100px;
+		left: 100px;
+	}
+	</style>
+
+
+</head>
+<body>
+	<div id="canvas">
+
+
+
+
+
+
+
+
+
+
+
+		<script src="js/three.min.js"></script>
+		<script>
+
+		var checkerboard = 
+		[
+		[ 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1 ],
+		[ 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1],
+		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
+		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+		[ 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
+		[ 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1],
+
+
+		];
+
+		var container = document.getElementById( 'canvas' );
+		document.body.appendChild( container );
+
+
+
+		var scene = new THREE.Scene();
+		var camera = new THREE.PerspectiveCamera( 45, 1, 0.1, 1000 );
+		camera.position.z = 800;
+		camera.position.y = 315;
+		camera.position.x = 315;
+
+
+
+		var renderer = new THREE.WebGLRenderer({ antialias: true });
+		renderer.setClearColor( 0xffffff, 1 ); 
+	// renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize( 600, 600 );
+	container.appendChild( renderer.domElement );
+
+	//document.body.appendChild( renderer.domElement );
+
+	var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+	var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	var cube = new THREE.Mesh( geometry, material );
+	scene.add( cube );
+
+	var light = new THREE.PointLight(0xffffff);
+	light.position.set(100,250,100);
+	scene.add(light);
+
+	var darkMaterial = new THREE.MeshLambertMaterial( { color: 0x00ffcc } );
+	var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } ); 
+	var multiMaterial = [ darkMaterial, wireframeMaterial ]; 
+
+
+
+	var curve = new THREE.CatmullRomCurve3( [
+		new THREE.Vector3( 0, 0, 0 ),
+		new THREE.Vector3( 600, 0, 0 ),
+		new THREE.Vector3(600, 600, 0 ),
+		new THREE.Vector3( 0, 600, 0 ),
+		new THREE.Vector3( 0, 0, 0 ),
+
+
+
+
+
+		] );
+
+	var tapestry =[];
+
+	function warpVerts(binArray, xIndex){ //takes an array of 0's and 1's for first parameter, and the index for second
+	var thisArray=[];
+	var crvID=0;
+
+
+	for (var i = 0; i < binArray.length; i++){
+		if (binArray[i]==0 && binArray[i-1] == 0){
+
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40,-10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+10,-10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+20,-10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+30,-10));
+
+		}else if (binArray[i]==0 && binArray[i-1] == 1){
+
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40,0));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+10,0));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+20,-10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+30,-10));
+
+		}else if (binArray[i]==1 && binArray[i-1] == 0){
+
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40,0));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+10,0));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+20,10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+30,10));
+
+		}else if (binArray[i]==1 && binArray[i-1] == 1){
+
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40,10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+10,10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+20,10));
+			thisArray.push( new THREE.Vector3(xIndex*40,i*40+30,10));
+
+		};
+	}
+
+
+	tapestry.push(new THREE.CatmullRomCurve3(thisArray));
+}
+
+function weftVerts(array){
+
+}
+
+
+	var zipp; //
+
+	function read2Darray(DArray){
+	var zippedArray2D=[[]]; //
+
+	for (var i = 0; i < DArray.length; i++ ){
+		warpVerts(DArray[i], i);
+	};
+
+	for (var i = 0; i < DArray.length; i++ ){
+		var zippedArray=[];
+
+		for (var j = 0; j < DArray[i].length; j++ ){
+			zippedArray.push(DArray[j][i]);
+
+		}
+		zippedArray2D.push(zippedArray);
+	}
+
+	for (var i = 0; i < tapestry.length; i++ ){
+		if (tapestry[i]){
+			//var geo = new THREE.Mesh( new  THREE.TubeGeometry(tapestry[i], 20, 7, 8, false), darkMaterial);
+			//geo.position.set(0, 0, -100);
+			scene.add( new THREE.Mesh( new  THREE.TubeGeometry(tapestry[i], 20, 7, 8, false), darkMaterial) );
+		}
+	}
+
+	zippedArray2D.shift();
+	zipp = zippedArray2D;
+
+
+};
+
+
+
+read2Darray(checkerboard);
+
+
+//var warpArray = warpVerts([0,0,0,0,1,1,1,1,1,0,1,0,1,0,1,0], 0);
+
+	var geometry = new THREE.TubeGeometry(tapestry[0],  //path
+    20,    //segments
+    7,     //radius
+    8,     //radiusSegments
+    false  //closed
+    );
+
+
+	var shape = new THREE.Mesh( 
+		// total knot radius, tube radius, number cylinder segments, sides per cyl. segment,
+		//  p-loops around torus, q-loops around torus
+		geometry, 
+		darkMaterial );
+	//shape.position.set(0, 0, -100);
+	scene.add( shape );
+	
+	
+
+	
+
+	//camera.position = new THREE.Vector3( 320, 320, 300 );
+
+
+	var render = function () {
+		requestAnimationFrame( render );
+
+		cube.rotation.x += 0.1;
+		cube.rotation.y += 0.1;
+
+		renderer.render(scene, camera);
+	};
+
+	render();
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
