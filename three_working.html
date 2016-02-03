@@ -20,9 +20,21 @@
 </head>
 <body>
 	<div id="canvas">
+<!-- 
+for(){
+	for(){
+	var binArray = pixells[].map(function(x){
+		if (x.getVal()== true){
+			return 1;
+
+		}else{return 0;}
 
 
-
+}       );
+	return binArray;}
+}
+}
+ -->
 
 
 
@@ -34,24 +46,48 @@
 		<script src="js/three.min.js"></script>
 		<script>
 
-		var checkerboard = 
+		var chevron =
 		[
-		[ 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1 ],
-		[ 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1],
-		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
-		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
-		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
-		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
-		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
-		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-		[ 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 ],
-		[ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-		[ 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
-		[ 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1],
+		[ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+		[ 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+		[ 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],		
+		[ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+		[ 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+		[ 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],		
+		[ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+		[ 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+		[ 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],		
+		[ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+		[ 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+		[ 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],		
+		[ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+		[ 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+		[ 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0],
+		[ 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+
+
+
+		];
+
+		var checkerboard = 
+		
+		[
+		[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+		[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+		[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+		[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+		[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+		[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+		[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+		[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+		[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+		[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+		[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+		[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+		[ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+		[ 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
+		[ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+		[ 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
 
 
 		];
@@ -62,8 +98,8 @@
 
 
 		var scene = new THREE.Scene();
-		var camera = new THREE.PerspectiveCamera( 45, 1, 0.1, 1000 );
-		camera.position.z = 800;
+		var camera = new THREE.PerspectiveCamera( 45, 1, 0.1, 1100 );
+		camera.position.z = 1000;
 		camera.position.y = 315;
 		camera.position.x = 315;
 
@@ -83,10 +119,12 @@
 	scene.add( cube );
 
 	var light = new THREE.PointLight(0xffffff);
-	light.position.set(100,250,100);
+	light.position.set(0,0,700);
 	scene.add(light);
 
 	var darkMaterial = new THREE.MeshLambertMaterial( { color: 0x00ffcc } );
+	var lightMaterial = new THREE.MeshLambertMaterial( { color: 0xffffcc } );
+
 	var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } ); 
 	var multiMaterial = [ darkMaterial, wireframeMaterial ]; 
 
@@ -105,7 +143,9 @@
 
 		] );
 
-	var tapestry =[];
+	var tapestryWarp =[];
+	var tapestryWeft =[];
+
 
 	function warpVerts(binArray, xIndex){ //takes an array of 0's and 1's for first parameter, and the index for second
 	var thisArray=[];
@@ -145,55 +185,103 @@
 	}
 
 
-	tapestry.push(new THREE.CatmullRomCurve3(thisArray));
+	tapestryWarp.push(new THREE.CatmullRomCurve3(thisArray));
 }
 
-function weftVerts(array){
+function weftVerts(binArray, yIndex){ //takes an array of 0's and 1's for first parameter, and the index for second
+var thisArray=[];
+	//var crvID=0;
 
+
+	for (var i = 0; i < binArray.length; i++){
+		if (binArray[i]==0 && binArray[i-1] == 0){
+
+			thisArray.push( new THREE.Vector3(i*40- 40, yIndex*40+40, 10));
+			thisArray.push( new THREE.Vector3(i*40- 30,yIndex*40+40,10));
+			thisArray.push( new THREE.Vector3(i*40- 20,yIndex*40+40,10));
+			thisArray.push( new THREE.Vector3(i*40- 10,yIndex*40+40,10));
+
+		}else if (binArray[i]==0 && binArray[i-1] == 1){
+
+			thisArray.push( new THREE.Vector3(i*40 -40, yIndex*40+40, 0));
+			thisArray.push( new THREE.Vector3(i*40- 30,yIndex*40+40,0));
+			thisArray.push( new THREE.Vector3(i*40-20,yIndex*40+40,10));
+			thisArray.push( new THREE.Vector3(i*40-10,yIndex*40+40,10));
+
+		}else if (binArray[i]==1 && binArray[i-1] == 0){
+
+			thisArray.push( new THREE.Vector3(i*40-40, yIndex*40+40, 0)) ;
+			thisArray.push( new THREE.Vector3(i*40-30,yIndex*40+40,0));
+			thisArray.push( new THREE.Vector3(i*40-20,yIndex*40+40,-10));
+			thisArray.push( new THREE.Vector3(i*40-10,yIndex*40+40,-10));
+
+		}else if (binArray[i]==1 && binArray[i-1] == 1){
+
+			thisArray.push( new THREE.Vector3(i*40-40, yIndex*40+40,-10));
+			thisArray.push( new THREE.Vector3(i*40-30,yIndex*40+40,-10));
+			thisArray.push( new THREE.Vector3(i*40-20,yIndex*40+40,-10));
+			thisArray.push( new THREE.Vector3(i*40-10,yIndex*40+40,-10));
+
+		};
+	}
+
+
+	tapestryWeft.push(new THREE.CatmullRomCurve3(thisArray));
 }
+
+
+
+
+
+
 
 
 	var zipp; //
 
 	function read2Darray(DArray){
-	var zippedArray2D=[[]]; //
+		for (var i = 0; i < DArray.length; i++ ){
+			weftVerts(DArray[i], i);
+			//console.log(DArray);
+		};
 
-	for (var i = 0; i < DArray.length; i++ ){
-		warpVerts(DArray[i], i);
-	};
 
-	for (var i = 0; i < DArray.length; i++ ){
-		var zippedArray=[];
+		var newArray = DArray[0].map(function(col, i) { 
+			return DArray.map(function(row) { 
+				return row[i] 
+			})
+		});
 
-		for (var j = 0; j < DArray[i].length; j++ ){
-			zippedArray.push(DArray[j][i]);
+		for (var i = 0; i < newArray.length; i++ ){
+			warpVerts(newArray[i], i);
+		};
 
-		}
-		zippedArray2D.push(zippedArray);
-	}
 
-	for (var i = 0; i < tapestry.length; i++ ){
-		if (tapestry[i]){
-			//var geo = new THREE.Mesh( new  THREE.TubeGeometry(tapestry[i], 20, 7, 8, false), darkMaterial);
+
+		for (var i = 0; i < tapestryWarp.length; i++ ){
+		// 	if (tapestryWarp[i]){
+		// 	//ar geo = new THREE.Mesh( new  THREE.TubeGeometry(tapestryWarp
+		// [i], 20, 7, 8, false), darkMaterial);
 			//geo.position.set(0, 0, -100);
-			scene.add( new THREE.Mesh( new  THREE.TubeGeometry(tapestry[i], 20, 7, 8, false), darkMaterial) );
+			scene.add( new THREE.Mesh( new  THREE.TubeGeometry(tapestryWarp[i], 20, 15, 8, false), darkMaterial) );
+			scene.add( new THREE.Mesh( new  THREE.TubeGeometry(tapestryWeft[i], 20, 15, 8, false), lightMaterial) );
+
 		}
 	}
 
-	zippedArray2D.shift();
-	zipp = zippedArray2D;
-
-
-};
+	
 
 
 
-read2Darray(checkerboard);
+
+
+
+
+	read2Darray(chevron);
 
 
 //var warpArray = warpVerts([0,0,0,0,1,1,1,1,1,0,1,0,1,0,1,0], 0);
 
-	var geometry = new THREE.TubeGeometry(tapestry[0],  //path
+	var geometry = new THREE.TubeGeometry(tapestryWarp[0],  //path
     20,    //segments
     7,     //radius
     8,     //radiusSegments
